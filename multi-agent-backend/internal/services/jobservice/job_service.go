@@ -7,7 +7,7 @@ import (
 
 	"github.com/jobzee/multi-agent-backend/internal/database"
 	"github.com/jobzee/multi-agent-backend/internal/models"
-	pb "github.com/jobzee/multi-agent-backend/proto/grpc"
+	pb "github.com/jobzee/multi-agent-backend/proto/proto/job_service"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"

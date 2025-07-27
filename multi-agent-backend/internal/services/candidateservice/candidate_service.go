@@ -7,7 +7,7 @@ import (
 
 	"github.com/jobzee/multi-agent-backend/internal/database"
 	"github.com/jobzee/multi-agent-backend/internal/models"
-	pb "github.com/jobzee/multi-agent-backend/proto/grpc"
+	pb "github.com/jobzee/multi-agent-backend/proto/proto/candidate_service"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -340,7 +340,7 @@ func (s *CandidateService) candidateModelToProto(candidate *models.Candidate) *p
 
 	// Convert model Education to proto Education
 	education := make([]*pb.Education, len(candidate.Education))
-	for i, edu := range candidate.Education {
+	for i := range candidate.Education {
 		// Simple parsing - in production, you'd want to store this in a structured way
 		education[i] = &pb.Education{
 			Institution:   "Unknown", // Would need to parse from string

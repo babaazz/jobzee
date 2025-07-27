@@ -5,6 +5,24 @@ import (
 	"gorm.io/gorm"
 )
 
+// UserRepositoryInterface defines the interface for user repository operations
+type UserRepositoryInterface interface {
+	Create(user *models.User) error
+	GetByID(id uint) (*models.User, error)
+	GetByEmail(email string) (*models.User, error)
+	Update(user *models.User) error
+	Delete(id uint) error
+	List(offset, limit int) ([]models.User, error)
+	GetByRole(role models.UserRole) ([]models.User, error)
+	GetActiveUsers() ([]models.User, error)
+	SearchUsers(query string) ([]models.User, error)
+	GetUsersByCompany(companyID uint) ([]models.User, error)
+	CountUsers() (int64, error)
+	GetUserWithProfile(userID uint) (*models.User, error)
+	GetUserWithJobs(userID uint) (*models.User, error)
+	GetUserWithApplications(userID uint) (*models.User, error)
+}
+
 type UserRepository struct {
 	db *gorm.DB
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jobzee/multi-agent-backend/internal/models"
 	"github.com/jobzee/multi-agent-backend/internal/services"
+	pb "github.com/jobzee/multi-agent-backend/proto/proto/agent_service"
 )
 
 type Handler struct {
@@ -106,13 +107,42 @@ func (h *Handler) ProcessJobRequest(c *gin.Context) {
 		return
 	}
 
-	response, err := h.agentService.ProcessJobRequest(c.Request.Context(), &req)
+	// Convert to protobuf type
+	pbReq := &pb.JobRequest{
+		RequestId:       req.RequestId,
+		UserId:          req.UserId,
+		JobDescription:  req.JobDescription,
+		Skills:          req.Skills,
+		Location:        req.Location,
+		ExperienceLevel: req.ExperienceLevel,
+	}
+
+	response, err := h.agentService.ProcessJobRequest(c.Request.Context(), pbReq)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, response)
+	// Convert response back to model type
+	modelResponse := &models.JobResponse{
+		RequestId: response.RequestId,
+		Status:    response.Status,
+		Message:   response.Message,
+		Matches:   make([]models.JobMatch, len(response.Matches)),
+	}
+
+	for i, match := range response.Matches {
+		modelResponse.Matches[i] = models.JobMatch{
+			JobId:       match.JobId,
+			Title:       match.Title,
+			Company:     match.Company,
+			Location:    match.Location,
+			MatchScore:  match.MatchScore,
+			Description: match.Description,
+		}
+	}
+
+	c.JSON(http.StatusOK, modelResponse)
 }
 
 func (h *Handler) ProcessCandidateRequest(c *gin.Context) {
@@ -122,11 +152,42 @@ func (h *Handler) ProcessCandidateRequest(c *gin.Context) {
 		return
 	}
 
-	response, err := h.agentService.ProcessCandidateRequest(c.Request.Context(), &req)
+	// Convert to protobuf type
+	pbReq := &pb.CandidateRequest{
+		RequestId:       req.RequestId,
+		JobId:           req.JobId,
+		JobTitle:        req.JobTitle,
+		Company:         req.Company,
+		RequiredSkills:  req.RequiredSkills,
+		Location:        req.Location,
+		ExperienceLevel: req.ExperienceLevel,
+	}
+
+	response, err := h.agentService.ProcessCandidateRequest(c.Request.Context(), pbReq)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, response)
+	// Convert response back to model type
+	modelResponse := &models.CandidateResponse{
+		RequestId: response.RequestId,
+		Status:    response.Status,
+		Message:   response.Message,
+		Matches:   make([]models.CandidateMatch, len(response.Matches)),
+	}
+
+	for i, match := range response.Matches {
+		modelResponse.Matches[i] = models.CandidateMatch{
+			CandidateId: match.CandidateId,
+			Name:        match.Name,
+			Email:       match.Email,
+			MatchScore:  match.MatchScore,
+			Skills:      match.Skills,
+			Experience:  match.Experience,
+			Location:    match.Location,
+		}
+	}
+
+	c.JSON(http.StatusOK, modelResponse)
 } 

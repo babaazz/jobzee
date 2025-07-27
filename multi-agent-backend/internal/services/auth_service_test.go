@@ -5,16 +5,20 @@ import (
 
 	"github.com/jobzee/multi-agent-backend/internal/config"
 	"github.com/jobzee/multi-agent-backend/internal/models"
+	"github.com/jobzee/multi-agent-backend/internal/repository"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-// MockUserRepository is a mock implementation of UserRepository
+// MockUserRepository is a mock implementation of UserRepositoryInterface
 type MockUserRepository struct {
 	mock.Mock
 }
+
+// Ensure MockUserRepository implements UserRepositoryInterface
+var _ repository.UserRepositoryInterface = (*MockUserRepository)(nil)
 
 func (m *MockUserRepository) Create(user *models.User) error {
 	args := m.Called(user)
@@ -153,6 +157,8 @@ func TestAuthService_Register(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Reset mock before each test
+			mockRepo.ExpectedCalls = nil
 			tt.setupMock()
 
 			response, err := authService.Register(tt.request)
@@ -255,6 +261,8 @@ func TestAuthService_Login(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Reset mock before each test
+			mockRepo.ExpectedCalls = nil
 			tt.setupMock()
 
 			response, err := authService.Login(tt.request)
@@ -342,6 +350,8 @@ func TestAuthService_ValidateToken(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Reset mock before each test
+			mockRepo.ExpectedCalls = nil
 			tt.setupMock()
 
 			claims, err := authService.ValidateToken(tt.token)
@@ -434,6 +444,8 @@ func TestAuthService_ChangePassword(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Reset mock before each test
+			mockRepo.ExpectedCalls = nil
 			tt.setupMock()
 
 			err := authService.ChangePassword(tt.userID, tt.request)
@@ -517,6 +529,8 @@ func TestAuthService_UpdateProfile(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Reset mock before each test
+			mockRepo.ExpectedCalls = nil
 			tt.setupMock()
 
 			user, err := authService.UpdateProfile(tt.userID, tt.request)

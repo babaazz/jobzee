@@ -45,20 +45,20 @@ type ChatResponse struct {
 func (h *AgentHandlers) ProcessJobRequest(c *gin.Context) {
 	var req ChatRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	// Validate agent type
 	if req.AgentType != "job-finder" {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid agent type", nil)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid agent type", nil)
 		return
 	}
 
 	// Process the request through the agent service
 	response, err := h.agentService.ProcessJobFinderRequest(req.UserID, req.Message, req.Metadata)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to process request", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to process request", err)
 		return
 	}
 
@@ -77,20 +77,20 @@ func (h *AgentHandlers) ProcessJobRequest(c *gin.Context) {
 func (h *AgentHandlers) ProcessCandidateRequest(c *gin.Context) {
 	var req ChatRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	// Validate agent type
 	if req.AgentType != "candidate-finder" {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid agent type", nil)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid agent type", nil)
 		return
 	}
 
 	// Process the request through the agent service
 	response, err := h.agentService.ProcessCandidateFinderRequest(req.UserID, req.Message, req.Metadata)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to process request", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to process request", err)
 		return
 	}
 
@@ -109,7 +109,7 @@ func (h *AgentHandlers) ProcessCandidateRequest(c *gin.Context) {
 func (h *AgentHandlers) GetAgentStatus(c *gin.Context) {
 	status, err := h.agentService.GetAgentStatus()
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to get agent status", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to get agent status", err)
 		return
 	}
 
@@ -129,14 +129,14 @@ func (h *AgentHandlers) CreateJobPosting(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	// Create job posting through agent service
 	jobPosting, err := h.agentService.CreateJobPosting(req.UserID, req.JobDescription, req.Requirements, req.Metadata)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to create job posting", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to create job posting", err)
 		return
 	}
 
@@ -150,13 +150,13 @@ func (h *AgentHandlers) CreateJobPosting(c *gin.Context) {
 func (h *AgentHandlers) GetCandidateMatches(c *gin.Context) {
 	jobID := c.Param("jobId")
 	if jobID == "" {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Job ID is required", nil)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Job ID is required", nil)
 		return
 	}
 
 	matches, err := h.agentService.GetCandidateMatches(jobID)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to get candidate matches", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to get candidate matches", err)
 		return
 	}
 
@@ -170,13 +170,13 @@ func (h *AgentHandlers) GetCandidateMatches(c *gin.Context) {
 func (h *AgentHandlers) GetJobMatches(c *gin.Context) {
 	candidateID := c.Param("candidateId")
 	if candidateID == "" {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Candidate ID is required", nil)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Candidate ID is required", nil)
 		return
 	}
 
 	matches, err := h.agentService.GetJobMatches(candidateID)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to get job matches", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to get job matches", err)
 		return
 	}
 
@@ -198,13 +198,13 @@ func (h *AgentHandlers) ScheduleInterview(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	interview, err := h.agentService.ScheduleInterview(req.CandidateID, req.JobID, req.InterviewDate, req.Duration, req.Type, req.Notes)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to schedule interview", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to schedule interview", err)
 		return
 	}
 
@@ -218,19 +218,19 @@ func (h *AgentHandlers) ScheduleInterview(c *gin.Context) {
 func (h *AgentHandlers) GetConversationHistory(c *gin.Context) {
 	userID := c.Param("userId")
 	if userID == "" {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "User ID is required", nil)
+		utils.ErrorResponse(c, http.StatusBadRequest, "User ID is required", nil)
 		return
 	}
 
 	agentType := c.Query("agentType")
 	if agentType == "" {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Agent type is required", nil)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Agent type is required", nil)
 		return
 	}
 
 	history, err := h.agentService.GetConversationHistory(userID, agentType)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to get conversation history", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to get conversation history", err)
 		return
 	}
 
@@ -248,13 +248,13 @@ func (h *AgentHandlers) UpdateCandidateProfile(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.SendErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	profile, err := h.agentService.UpdateCandidateProfile(req.UserID, req.Profile)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to update candidate profile", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to update candidate profile", err)
 		return
 	}
 
@@ -271,7 +271,7 @@ func (h *AgentHandlers) GetAgentAnalytics(c *gin.Context) {
 
 	analytics, err := h.agentService.GetAgentAnalytics(agentType, timeRange)
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusInternalServerError, "Failed to get agent analytics", err)
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to get agent analytics", err)
 		return
 	}
 
@@ -285,7 +285,7 @@ func (h *AgentHandlers) GetAgentAnalytics(c *gin.Context) {
 func (h *AgentHandlers) HealthCheck(c *gin.Context) {
 	health, err := h.agentService.HealthCheck()
 	if err != nil {
-		utils.SendErrorResponse(c, http.StatusServiceUnavailable, "Agent service unhealthy", err)
+		utils.ErrorResponse(c, http.StatusServiceUnavailable, "Agent service unhealthy", err)
 		return
 	}
 

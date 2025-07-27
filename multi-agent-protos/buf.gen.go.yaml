@@ -2,7 +2,7 @@ version: v1
 plugins:
   - name: go
     out: ../multi-agent-backend/proto
-    opt: paths=source_relative
+    opt: module=github.com/jobzee/multi-agent-backend
   - name: go-grpc
     out: ../multi-agent-backend/proto
-    opt: paths=source_relative
+    opt: module=github.com/jobzee/multi-agent-backend

@@ -118,7 +118,7 @@ func (h *AuthHandler) UpdateProfile(c *gin.Context) {
 
 // GetProfile gets the current user's profile
 func (h *AuthHandler) GetProfile(c *gin.Context) {
-	userID, exists := utils.GetCurrentUserID(c)
+	_, exists := utils.GetCurrentUserID(c)
 	if !exists {
 		utils.ErrorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
 		return

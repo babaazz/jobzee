@@ -14,7 +14,7 @@ import (
 
 	"github.com/jobzee/multi-agent-backend/internal/config"
 	"github.com/jobzee/multi-agent-backend/internal/services"
-	pb "github.com/jobzee/multi-agent-backend/proto/grpc"
+	pb "github.com/jobzee/multi-agent-backend/proto/proto/agent_service"
 )
 
 type agentServer struct {
@@ -31,10 +31,7 @@ func (s *agentServer) ProcessCandidateRequest(ctx context.Context, req *pb.Candi
 }
 
 func main() {
-	cfg, err := config.Load()
-	if err != nil {
-		log.Fatalf("Failed to load config: %v", err)
-	}
+	cfg := config.Load()
 
 	// Initialize services
 	agentService := services.NewAgentService(cfg)

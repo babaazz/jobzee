@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-package grpc;
+package jobzee.agent_service;
 
-option go_package = "github.com/jobzee/multi-agent-protos/grpc";
+option go_package = "github.com/jobzee/multi-agent-backend/proto/agent_service";
+option java_multiple_files = true;
+option java_package = "com.jobzee.agentservice";
 
 service AgentService {
   rpc ProcessJobRequest(JobRequest) returns (JobResponse);

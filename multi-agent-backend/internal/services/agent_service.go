@@ -2,12 +2,14 @@ package services
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/jobzee/multi-agent-backend/internal/config"
+	pb "github.com/jobzee/multi-agent-backend/proto/proto/agent_service"
 )
 
 // AgentService handles communication with AI agents
@@ -341,4 +343,120 @@ func (s *AgentService) HealthCheck() (map[string]interface{}, error) {
 	}
 
 	return health, nil
+}
+
+// ProcessJobRequest implements the gRPC interface for processing job requests
+func (s *AgentService) ProcessJobRequest(ctx context.Context, req *pb.JobRequest) (*pb.JobResponse, error) {
+	// Convert protobuf request to internal format
+	metadata := map[string]interface{}{
+		"skills":           req.Skills,
+		"location":         req.Location,
+		"experience_level": req.ExperienceLevel,
+	}
+
+	// Process through job finder agent
+	response, err := s.ProcessJobFinderRequest(req.UserId, req.JobDescription, metadata)
+	if err != nil {
+		return &pb.JobResponse{
+			RequestId: req.RequestId,
+			Status:    "error",
+			Message:   err.Error(),
+		}, nil
+	}
+
+	// Convert response to protobuf format
+	matches := []*pb.JobMatch{}
+	if response.Data != nil {
+		if jobs, ok := response.Data["jobs"].([]interface{}); ok {
+			for _, job := range jobs {
+				if jobMap, ok := job.(map[string]interface{}); ok {
+					match := &pb.JobMatch{
+						JobId:       getString(jobMap, "id"),
+						Title:       getString(jobMap, "title"),
+						Company:     getString(jobMap, "company"),
+						Location:    getString(jobMap, "location"),
+						Description: getString(jobMap, "description"),
+					}
+					if score, ok := jobMap["match_score"].(float64); ok {
+						match.MatchScore = score
+					}
+					matches = append(matches, match)
+				}
+			}
+		}
+	}
+
+	return &pb.JobResponse{
+		RequestId: req.RequestId,
+		Status:    "success",
+		Message:   response.Message,
+		Matches:   matches,
+	}, nil
+}
+
+// ProcessCandidateRequest implements the gRPC interface for processing candidate requests
+func (s *AgentService) ProcessCandidateRequest(ctx context.Context, req *pb.CandidateRequest) (*pb.CandidateResponse, error) {
+	// Convert protobuf request to internal format
+	metadata := map[string]interface{}{
+		"required_skills":  req.RequiredSkills,
+		"location":         req.Location,
+		"experience_level": req.ExperienceLevel,
+		"company":          req.Company,
+	}
+
+	// Process through candidate finder agent
+	response, err := s.ProcessCandidateFinderRequest(req.JobId, req.JobTitle, metadata)
+	if err != nil {
+		return &pb.CandidateResponse{
+			RequestId: req.RequestId,
+			Status:    "error",
+			Message:   err.Error(),
+		}, nil
+	}
+
+	// Convert response to protobuf format
+	matches := []*pb.CandidateMatch{}
+	if response.Data != nil {
+		if candidates, ok := response.Data["candidates"].([]interface{}); ok {
+			for _, candidate := range candidates {
+				if candidateMap, ok := candidate.(map[string]interface{}); ok {
+					match := &pb.CandidateMatch{
+						CandidateId: getString(candidateMap, "id"),
+						Name:        getString(candidateMap, "name"),
+						Email:       getString(candidateMap, "email"),
+						Location:    getString(candidateMap, "location"),
+						Experience:  getString(candidateMap, "experience"),
+					}
+					if score, ok := candidateMap["match_score"].(float64); ok {
+						match.MatchScore = score
+					}
+					if skills, ok := candidateMap["skills"].([]interface{}); ok {
+						for _, skill := range skills {
+							if skillStr, ok := skill.(string); ok {
+								match.Skills = append(match.Skills, skillStr)
+							}
+						}
+					}
+					matches = append(matches, match)
+				}
+			}
+		}
+	}
+
+	return &pb.CandidateResponse{
+		RequestId: req.RequestId,
+		Status:    "success",
+		Message:   response.Message,
+		Matches:   matches,
+	}, nil
+}
+
+// Helper function to safely get string values from interface{}
+func getString(m map[string]interface{}, key string) string {
+	if val, ok := m[key]; ok {
+		if str, ok := val.(string); ok {
+			return str
+		}
+	}
+	return ""
 } 

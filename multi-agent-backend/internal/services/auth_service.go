@@ -16,10 +16,10 @@ import (
 
 type AuthService struct {
 	config     *config.Config
-	userRepo   *repository.UserRepository
+	userRepo   repository.UserRepositoryInterface
 }
 
-func NewAuthService(cfg *config.Config, userRepo *repository.UserRepository) *AuthService {
+func NewAuthService(cfg *config.Config, userRepo repository.UserRepositoryInterface) *AuthService {
 	return &AuthService{
 		config:   cfg,
 		userRepo: userRepo,

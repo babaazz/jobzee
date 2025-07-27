@@ -10,7 +10,7 @@ import (
 	"github.com/jobzee/multi-agent-backend/internal/config"
 	"github.com/jobzee/multi-agent-backend/internal/database"
 	"github.com/jobzee/multi-agent-backend/internal/services/candidateservice"
-	pb "github.com/jobzee/multi-agent-backend/proto/grpc"
+	pb "github.com/jobzee/multi-agent-backend/proto/proto/candidate_service"
 )
 
 func main() {
