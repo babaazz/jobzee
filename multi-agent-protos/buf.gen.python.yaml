@@ -1,0 +1,6 @@
+version: v1
+plugins:
+  - name: python
+    out: ../multi-agent-agents/proto
+  - name: grpc_python
+    out: ../multi-agent-agents/proto

@@ -1,0 +1,23 @@
+{
+  "Index": {
+    "title": "Multi-Agent Job Application System",
+    "description": "Intelligent job matching powered by AI agents",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "Navigation": {
+    "home": "Home",
+    "jobs": "Jobs",
+    "candidates": "Candidates",
+    "dashboard": "Dashboard"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success!",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit"
+  }
+}

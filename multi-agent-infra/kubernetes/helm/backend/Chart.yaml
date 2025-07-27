@@ -1,0 +1,17 @@
+apiVersion: v2
+name: multi-agent-backend
+description: A Helm chart for Multi-Agent Backend Services
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - jobzee
+  - backend
+  - microservices
+  - grpc
+home: https://github.com/jobzee/multi-agent-backend
+sources:
+  - https://github.com/jobzee/multi-agent-backend
+maintainers:
+  - name: JobZee Team
+    email: team@jobzee.com
