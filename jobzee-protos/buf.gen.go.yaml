@@ -1,0 +1,8 @@
+version: v1
+plugins:
+  - name: go
+    out: ../jobzee-backend/proto
+    opt: module=github.com/jobzee/jobzee-backend
+  - name: go-grpc
+    out: ../jobzee-backend/proto
+    opt: module=github.com/jobzee/jobzee-backend
