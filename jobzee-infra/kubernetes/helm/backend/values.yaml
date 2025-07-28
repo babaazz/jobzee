@@ -1,0 +1,106 @@
+# Default values for jobzee-backend
+replicaCount: 1
+
+image:
+  repository: jobzee/jobzee-backend
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+  grpcPort: 9090
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Database configuration
+database:
+  host: postgres-service
+  port: 5432
+  name: jobzee
+  user: postgres
+  password: ""
+  sslMode: disable
+
+# Redis configuration
+redis:
+  host: redis-service
+  port: 6379
+  password: ""
+  db: 0
+
+# Kafka configuration
+kafka:
+  bootstrapServers: "kafka-service:9092"
+  topic: "jobzee-events"
+
+# MinIO configuration
+minio:
+  endpoint: "minio-service:9000"
+  accessKey: "minioadmin"
+  secretKey: "minioadmin"
+  bucket: "jobzee"
+  useSSL: false
+
+# Environment variables
+env:
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "info"
+
+# Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+# Service ports for different microservices
+services:
+  api:
+    port: 8080
+    replicas: 2
+  jobservice:
+    port: 9090
+    replicas: 1
+  candidateservice:
+    port: 9091
+    replicas: 1
