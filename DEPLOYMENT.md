@@ -1,6 +1,6 @@
-# JobZee Multi-Agent System - Deployment Guide
+# JobZee System - Deployment Guide
 
-This guide provides comprehensive instructions for deploying the JobZee multi-agent job application platform.
+This guide provides comprehensive instructions for deploying the JobZee job application platform.
 
 ## 🚀 Quick Start
 
@@ -234,15 +234,15 @@ curl http://localhost:8085/health
 docker-compose up -d postgres redis kafka qdrant
 
 # Run backend locally
-cd multi-agent-backend
+cd jobzee-backend
 go run cmd/api/main.go
 
 # Run frontend locally
-cd multi-agent-frontend
+cd jobzee-frontend
 npm run dev
 
 # Run agents locally
-cd multi-agent-agents
+cd jobzee-agents
 python job_finder_agent/http_server.py
 python candidate_finder_agent/http_server.py
 ```
@@ -251,15 +251,15 @@ python candidate_finder_agent/http_server.py
 
 ```bash
 # Run backend tests
-cd multi-agent-backend
+cd jobzee-backend
 go test ./...
 
 # Run frontend tests
-cd multi-agent-frontend
+cd jobzee-frontend
 npm test
 
 # Run agent tests
-cd multi-agent-agents
+cd jobzee-agents
 pytest
 ```
 

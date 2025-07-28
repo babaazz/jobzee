@@ -1,6 +1,6 @@
-# JobZee - Multi-Agent Job Application Platform
+# JobZee - JobZee Job Application Platform
 
-A sophisticated multi-agent system for intelligent job matching and candidate recruitment using AI-powered agents, vector databases, and real-time communication.
+A sophisticated jobzee system for intelligent job matching and candidate recruitment using AI-powered agents, vector databases, and real-time communication.
 
 ## 🚀 Overview
 
@@ -104,7 +104,7 @@ JobZee is a comprehensive job application platform that leverages multiple AI ag
 
    ```bash
    # Using the setup script
-   ./multi-agent-infra/scripts/local-setup.sh
+   ./jobzee-infra/scripts/local-setup.sh
 
    # Or manually with Docker Compose
    docker-compose up -d
@@ -122,7 +122,7 @@ JobZee is a comprehensive job application platform that leverages multiple AI ag
 #### Backend Setup
 
 ```bash
-cd multi-agent-backend
+cd jobzee-backend
 go mod download
 go run cmd/api/main.go
 ```
@@ -130,7 +130,7 @@ go run cmd/api/main.go
 #### Frontend Setup
 
 ```bash
-cd multi-agent-frontend
+cd jobzee-frontend
 npm install
 npm run dev
 ```
@@ -138,7 +138,7 @@ npm run dev
 #### Agents Setup
 
 ```bash
-cd multi-agent-agents
+cd jobzee-agents
 pip install -r requirements.txt
 python job_finder_agent/main.py
 python candidate_finder_agent/main.py
@@ -148,12 +148,12 @@ python candidate_finder_agent/main.py
 
 ```
 jobzee/
-├── multi-agent-frontend/          # Next.js frontend application
+├── jobzee-frontend/          # Next.js frontend application
 │   ├── app/                      # App router pages
 │   ├── components/               # React components
 │   ├── hooks/                    # Custom React hooks
 │   └── types/                    # TypeScript type definitions
-├── multi-agent-backend/          # Go backend services
+├── jobzee-backend/          # Go backend services
 │   ├── cmd/                      # Application entry points
 │   ├── internal/                 # Internal packages
 │   │   ├── api/                  # HTTP handlers
@@ -161,15 +161,15 @@ jobzee/
 │   │   ├── models/               # Data models
 │   │   └── repository/           # Data access layer
 │   └── proto/                    # gRPC protocol definitions
-├── multi-agent-agents/           # Python AI agents
+├── jobzee-agents/           # Python AI agents
 │   ├── job_finder_agent/         # Job finder agent
 │   ├── candidate_finder_agent/   # Candidate finder agent
 │   ├── common/                   # Shared utilities
 │   └── workflows/                # LangGraph workflows
-├── multi-agent-protos/           # Protocol definitions
+├── jobzee-protos/           # Protocol definitions
 │   ├── grpc/                     # gRPC service definitions
 │   └── asyncapi/                 # AsyncAPI specifications
-├── multi-agent-infra/            # Infrastructure configuration
+├── jobzee-infra/            # Infrastructure configuration
 │   ├── kubernetes/               # K8s manifests
 │   ├── terraform/                # Infrastructure as code
 │   └── scripts/                  # Setup and deployment scripts
@@ -350,15 +350,15 @@ service AgentService {
 
 ```bash
 # Backend tests
-cd multi-agent-backend
+cd jobzee-backend
 go test ./...
 
 # Frontend tests
-cd multi-agent-frontend
+cd jobzee-frontend
 npm test
 
 # Agent tests
-cd multi-agent-agents
+cd jobzee-agents
 pytest
 ```
 
@@ -388,10 +388,10 @@ docker-compose up -d
 
 ```bash
 # Using Kubernetes
-kubectl apply -f multi-agent-infra/kubernetes/
+kubectl apply -f jobzee-infra/kubernetes/
 
 # Using Terraform
-cd multi-agent-infra/terraform
+cd jobzee-infra/terraform
 terraform init
 terraform apply
 ```

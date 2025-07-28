@@ -119,7 +119,7 @@ services:
   # Backend Services
   api-service:
     build:
-      context: ./multi-agent-backend
+      context: ./jobzee-backend
       dockerfile: Dockerfile
       target: api
     container_name: jobzee-api
@@ -164,7 +164,7 @@ services:
 
   job-service:
     build:
-      context: ./multi-agent-backend
+      context: ./jobzee-backend
       dockerfile: Dockerfile
       target: jobservice
     container_name: jobzee-job-service
@@ -196,7 +196,7 @@ services:
 
   candidate-service:
     build:
-      context: ./multi-agent-backend
+      context: ./jobzee-backend
       dockerfile: Dockerfile
       target: candidateservice
     container_name: jobzee-candidate-service
@@ -228,7 +228,7 @@ services:
 
   agent-service:
     build:
-      context: ./multi-agent-backend
+      context: ./jobzee-backend
       dockerfile: Dockerfile
       target: agentservice
     container_name: jobzee-agent-service
@@ -261,7 +261,7 @@ services:
   # Frontend
   frontend:
     build:
-      context: ./multi-agent-frontend
+      context: ./jobzee-frontend
       dockerfile: Dockerfile
     container_name: jobzee-frontend
     ports:
@@ -284,7 +284,7 @@ services:
   # Agent Services
   job-finder-agent:
     build:
-      context: ./multi-agent-agents
+      context: ./jobzee-agents
       dockerfile: Dockerfile
       target: job-finder
     container_name: jobzee-job-finder-agent
@@ -314,7 +314,7 @@ services:
 
   candidate-finder-agent:
     build:
-      context: ./multi-agent-agents
+      context: ./jobzee-agents
       dockerfile: Dockerfile
       target: candidate-finder
     container_name: jobzee-candidate-finder-agent
@@ -345,7 +345,7 @@ services:
   # MCP Tools Service
   mcp-tools:
     build:
-      context: ./multi-agent-agents
+      context: ./jobzee-agents
       dockerfile: Dockerfile
       target: mcp-tools
     container_name: jobzee-mcp-tools
