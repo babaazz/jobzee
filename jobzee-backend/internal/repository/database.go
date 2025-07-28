@@ -33,7 +33,7 @@ func NewDatabase(cfg *config.Config) (*Database, error) {
 	}
 
 	// Auto migrate models
-	if err := db.AutoMigrate(&models.Job{}, &models.Candidate{}); err != nil {
+	if err := db.AutoMigrate(&models.User{}, &models.Job{}, &models.Candidate{}, &models.Application{}); err != nil {
 		return nil, fmt.Errorf("failed to migrate database: %w", err)
 	}
 

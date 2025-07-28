@@ -1026,8 +1026,8 @@ const file_grpc_job_service_proto_rawDesc = "" +
 	"\tDeleteJob\x12$.jobzee.job_service.DeleteJobRequest\x1a\x16.google.protobuf.Empty\x12[\n" +
 	"\n" +
 	"SearchJobs\x12%.jobzee.job_service.SearchJobsRequest\x1a&.jobzee.job_service.SearchJobsResponse\x12S\n" +
-	"\vGetJobStats\x12&.jobzee.job_service.GetJobStatsRequest\x1a\x1c.jobzee.job_service.JobStatsBR\n" +
-	"\x15com.jobzee.jobserviceP\x01Z7github.com/jobzee/jobzee-backend/proto/job_serviceb\x06proto3"
+	"\vGetJobStats\x12&.jobzee.job_service.GetJobStatsRequest\x1a\x1c.jobzee.job_service.JobStatsBM\n" +
+	"\x15com.jobzee.jobserviceP\x01Z2github.com/jobzee/jobzee-backend/proto/job_serviceb\x06proto3"
 
 var (
 	file_grpc_job_service_proto_rawDescOnce sync.Once

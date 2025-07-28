@@ -19,5 +19,38 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember Me",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "acceptTerms": "I agree to the Terms of Service and Privacy Policy",
+    "role": {
+      "candidate": "Job Seeker",
+      "hr": "HR Professional"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Find Your Dream Job with AI",
+      "subtitle": "Connect with the perfect opportunity using intelligent job matching",
+      "getStarted": "Get Started Free",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Why Choose JobZee?",
+      "subtitle": "Our AI-powered platform revolutionizes the job search experience"
+    }
   }
 }

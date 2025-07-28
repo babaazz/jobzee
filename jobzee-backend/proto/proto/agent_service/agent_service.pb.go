@@ -565,8 +565,8 @@ const file_grpc_agent_service_proto_rawDesc = "" +
 	"\blocation\x18\a \x01(\tR\blocation2\xd4\x01\n" +
 	"\fAgentService\x12X\n" +
 	"\x11ProcessJobRequest\x12 .jobzee.agent_service.JobRequest\x1a!.jobzee.agent_service.JobResponse\x12j\n" +
-	"\x17ProcessCandidateRequest\x12&.jobzee.agent_service.CandidateRequest\x1a'.jobzee.agent_service.CandidateResponseBV\n" +
-	"\x17com.jobzee.agentserviceP\x01Z9github.com/jobzee/jobzee-backend/proto/agent_serviceb\x06proto3"
+	"\x17ProcessCandidateRequest\x12&.jobzee.agent_service.CandidateRequest\x1a'.jobzee.agent_service.CandidateResponseBQ\n" +
+	"\x17com.jobzee.agentserviceP\x01Z4github.com/jobzee/jobzee-backend/proto/agent_serviceb\x06proto3"
 
 var (
 	file_grpc_agent_service_proto_rawDescOnce sync.Once

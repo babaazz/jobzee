@@ -19,6 +19,7 @@ type Job struct {
 	JobType         string         `json:"job_type"` // full-time, part-time, contract, internship
 	RemoteFriendly  bool           `json:"remote_friendly"`
 	Status          string         `json:"status" gorm:"default:'active'"` // active, closed, draft
+	CreatedBy       uint           `json:"created_by" gorm:"not null"`
 	CreatedAt       time.Time      `json:"created_at"`
 	UpdatedAt       time.Time      `json:"updated_at"`
 	DeletedAt       gorm.DeletedAt `json:"deleted_at,omitempty" gorm:"index"`

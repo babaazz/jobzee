@@ -86,6 +86,10 @@ JobZee is a comprehensive job application platform that leverages multiple AI ag
 
 ### Quick Start
 
+For a complete step-by-step guide to running JobZee locally, see our **[Local Development Guide](docs/common/local-development-guide.md)**.
+
+**Quick Commands:**
+
 1. **Clone the repository**
 
    ```bash
@@ -93,17 +97,18 @@ JobZee is a comprehensive job application platform that leverages multiple AI ag
    cd jobzee
    ```
 
-2. **Set up environment variables**
+2. **Set environment variables**
 
    ```bash
-   cp .env.example .env
-   # Edit .env with your API keys and configuration
+   export OPENAI_API_KEY="your-openai-api-key-here"
+   export GITHUB_TOKEN="your-github-token-here"  # Optional
    ```
 
 3. **Start the system**
 
    ```bash
-   # Using the setup script
+   # Using the automated setup script
+   chmod +x jobzee-infra/scripts/local-setup.sh
    ./jobzee-infra/scripts/local-setup.sh
 
    # Or manually with Docker Compose
@@ -115,7 +120,7 @@ JobZee is a comprehensive job application platform that leverages multiple AI ag
    - API: http://localhost:8080
    - MinIO Console: http://localhost:9001
    - Grafana: http://localhost:3001 (admin/admin)
-   - Adminer: http://localhost:8087
+   - Adminer (Database): http://localhost:8087
 
 ### Manual Setup
 

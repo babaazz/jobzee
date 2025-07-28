@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 WORKDIR /app
 
@@ -17,6 +17,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api ./cmd/api
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o jobservice ./cmd/jobservice
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o candidateservice ./cmd/candidateservice
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o agentservice ./cmd/agentservice
 
 # Production stage
 FROM alpine:latest
@@ -29,9 +30,10 @@ WORKDIR /root/
 COPY --from=builder /app/api .
 COPY --from=builder /app/jobservice .
 COPY --from=builder /app/candidateservice .
+COPY --from=builder /app/agentservice .
 
 # Expose ports
-EXPOSE 8080 9090 9091
+EXPOSE 8080 8081 8082 8083
 
 # Default command (can be overridden)
 CMD ["./api"] 

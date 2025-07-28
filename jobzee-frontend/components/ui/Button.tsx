@@ -5,6 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -12,6 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
   size = "md",
   className,
   children,
+  fullWidth = false,
   ...props
 }) => {
   const baseClasses =
@@ -34,7 +36,13 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={clsx(baseClasses, variants[variant], sizes[size], className)}
+      className={clsx(
+        baseClasses,
+        variants[variant],
+        sizes[size],
+        fullWidth && "w-full",
+        className
+      )}
       {...props}
     >
       {children}

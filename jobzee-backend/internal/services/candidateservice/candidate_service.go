@@ -39,7 +39,6 @@ func (s *CandidateService) CreateCandidate(ctx context.Context, req *pb.CreateCa
 
 	candidate := &models.Candidate{
 		Name:              req.Name,
-		Email:             req.Email,
 		Phone:             req.Phone,
 		Location:          req.Location,
 		Skills:            req.Skills,
@@ -135,9 +134,6 @@ func (s *CandidateService) UpdateCandidate(ctx context.Context, req *pb.UpdateCa
 	// Update fields
 	if req.Candidate.Name != "" {
 		candidate.Name = req.Candidate.Name
-	}
-	if req.Candidate.Email != "" {
-		candidate.Email = req.Candidate.Email
 	}
 	if req.Candidate.Phone != "" {
 		candidate.Phone = req.Candidate.Phone
@@ -353,7 +349,6 @@ func (s *CandidateService) candidateModelToProto(candidate *models.Candidate) *p
 	return &pb.Candidate{
 		Id:                candidate.ID,
 		Name:              candidate.Name,
-		Email:             candidate.Email,
 		Phone:             candidate.Phone,
 		Location:          candidate.Location,
 		Skills:            candidate.Skills,

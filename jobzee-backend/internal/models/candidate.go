@@ -8,8 +8,8 @@ import (
 
 type Candidate struct {
 	ID                string         `json:"id" gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
+	UserID            uint           `json:"user_id" gorm:"not null"`
 	Name              string         `json:"name" gorm:"not null"`
-	Email             string         `json:"email" gorm:"not null;unique"`
 	Phone             string         `json:"phone"`
 	Location          string         `json:"location"`
 	Skills            []string       `json:"skills" gorm:"type:text[]"`

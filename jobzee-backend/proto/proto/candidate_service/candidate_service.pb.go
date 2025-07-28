@@ -1213,8 +1213,8 @@ const file_grpc_candidate_service_proto_rawDesc = "" +
 	"\x0fUpdateCandidate\x120.jobzee.candidate_service.UpdateCandidateRequest\x1a#.jobzee.candidate_service.Candidate\x12[\n" +
 	"\x0fDeleteCandidate\x120.jobzee.candidate_service.DeleteCandidateRequest\x1a\x16.google.protobuf.Empty\x12y\n" +
 	"\x10SearchCandidates\x121.jobzee.candidate_service.SearchCandidatesRequest\x1a2.jobzee.candidate_service.SearchCandidatesResponse\x12q\n" +
-	"\x11GetCandidateStats\x122.jobzee.candidate_service.GetCandidateStatsRequest\x1a(.jobzee.candidate_service.CandidateStatsB^\n" +
-	"\x1bcom.jobzee.candidateserviceP\x01Z=github.com/jobzee/jobzee-backend/proto/candidate_serviceb\x06proto3"
+	"\x11GetCandidateStats\x122.jobzee.candidate_service.GetCandidateStatsRequest\x1a(.jobzee.candidate_service.CandidateStatsBY\n" +
+	"\x1bcom.jobzee.candidateserviceP\x01Z8github.com/jobzee/jobzee-backend/proto/candidate_serviceb\x06proto3"
 
 var (
 	file_grpc_candidate_service_proto_rawDescOnce sync.Once
