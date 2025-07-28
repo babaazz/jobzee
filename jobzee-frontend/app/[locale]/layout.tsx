@@ -8,20 +8,7 @@ interface Props {
   params: { locale: string };
 }
 
-const locales = [
-  "en",
-  "hi",
-  "es",
-  "fr",
-  "ml",
-  "tr",
-  "gu",
-  "bn",
-  "ar",
-  "ru",
-  "mr",
-  "kn",
-];
+const locales = ["en", "hi"];
 
 export default async function LocaleLayout({
   children,
@@ -33,12 +20,13 @@ export default async function LocaleLayout({
   try {
     messages = (await import(`../../locales/${locale}.json`)).default;
   } catch (error) {
-    notFound();
+    // Fallback to English if locale file doesn't exist
+    messages = (await import(`../../locales/en.json`)).default;
   }
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
