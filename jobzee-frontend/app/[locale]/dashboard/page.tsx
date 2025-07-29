@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import { useAuthStore } from "../../../lib/auth-store";
 import { Header } from "../../../components/layout/Header";
 import { Footer } from "../../../components/layout/Footer";
@@ -20,13 +21,14 @@ import {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const locale = useLocale();
   const { user, isAuthenticated, isLoading } = useAuthStore();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push("/auth/login");
+      router.push(`/${locale}/auth/login`);
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, router, locale]);
 
   if (isLoading) {
     return (
@@ -37,7 +39,14 @@ export default function DashboardPage() {
   }
 
   if (!isAuthenticated) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Redirecting to login...</p>
+        </div>
+      </div>
+    );
   }
 
   const stats = [
@@ -102,9 +111,9 @@ export default function DashboardPage() {
   ];
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="pt-16 min-h-screen bg-gray-50">
+      <main className="pt-16 flex-1 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Welcome Section */}
           <div className="mb-8">
@@ -261,6 +270,6 @@ export default function DashboardPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

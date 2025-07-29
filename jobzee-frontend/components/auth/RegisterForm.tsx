@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, Building, UserCheck } from "lucide-react";
@@ -17,6 +18,7 @@ import { authAPI } from "../../lib/auth-api";
 export const RegisterForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const locale = useLocale();
   const { login, setLoading } = useAuthStore();
 
   const {
@@ -66,8 +68,8 @@ export const RegisterForm: React.FC = () => {
       const response = await authAPI.register({
         email: data.email,
         password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        first_name: data.firstName,
+        last_name: data.lastName,
         role: data.role,
       });
 
@@ -76,7 +78,7 @@ export const RegisterForm: React.FC = () => {
         role: response.user.role as "candidate" | "hr" | "admin",
       });
 
-      router.push("/dashboard");
+      router.push(`/${locale}/dashboard`);
     } catch (err: any) {
       setError(err.message || "Registration failed. Please try again.");
     } finally {

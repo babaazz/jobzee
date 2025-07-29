@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
@@ -18,6 +19,7 @@ export const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const locale = useLocale();
   const { login, setLoading } = useAuthStore();
 
   const {
@@ -43,7 +45,7 @@ export const LoginForm: React.FC = () => {
         role: response.user.role as "candidate" | "hr" | "admin",
       });
 
-      router.push("/dashboard");
+      router.push(`/${locale}/dashboard`);
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
     } finally {

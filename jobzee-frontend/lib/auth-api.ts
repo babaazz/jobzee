@@ -10,12 +10,12 @@ interface LoginRequest {
 interface RegisterRequest {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   role: "candidate" | "hr";
   phone?: string;
   location?: string;
-  companyId?: number;
+  company_id?: number;
 }
 
 interface AuthResponse {
@@ -49,7 +49,7 @@ class AuthAPI {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
-    const url = `${this.baseURL}/api/v1${endpoint}`;
+    const url = `${this.baseURL}${endpoint}`;
 
     const defaultHeaders: Record<string, string> = {
       "Content-Type": "application/json",
