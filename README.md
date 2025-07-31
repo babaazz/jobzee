@@ -1,6 +1,6 @@
-# JobZee - JobZee Job Application Platform
+# JobZee - Job Application Platform
 
-A sophisticated jobzee system for intelligent job matching and candidate recruitment using AI-powered agents, vector databases, and real-time communication.
+A sophisticated job application system for intelligent job matching and candidate recruitment using AI-powered agents, vector databases, and real-time communication.
 
 ## 🚀 Overview
 
